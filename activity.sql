@@ -8,7 +8,7 @@ with recursive activity_hierarchy as (
     join activitytype act on act.activitytypeid = a.activitytypeid
     where a.activityid = 1
     union all
-    select
+   	(select
         a.activityid,
         a.parentid,
         a.activitytypeid,
@@ -16,6 +16,7 @@ with recursive activity_hierarchy as (
    	from activity_hierarchy ah
     join activity as a on a.parentid = ah.activityid
     join activitytype as act on act.activitytypeid = a.activitytypeid
+    order by a.activitytypeid desc)
 )
 select 
 	activityid,
@@ -39,5 +40,4 @@ select
 		activitytypename
 	from activity_hierarchy as ah
 	where ah.activitytypeid > 2;
-	
 
